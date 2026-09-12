@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#08090d" />
+    <title>Extra Time | Gaming Lounge</title>
+    <meta name="description" content="Extra Time Gaming Lounge in Sfax — Games booking, loyalty points & ranks, rewards, snack & gear store, and lightning maze mini-game." />
+    <meta property="og:title" content="Extra Time | Gaming Lounge" />
+    <meta property="og:description" content="Extra Time Gaming Lounge in Sfax — Games booking, loyalty points & ranks, rewards, snack & gear store, and lightning maze mini-game." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./script.js"></script>
+  </head>
+  <body class="bg-[#08090d] text-[#e8eaf0] antialiased selection:bg-[#00a8ff] selection:text-white">
+    <div id="root"></div>
+
+    <!-- Hidden FormSubmit form for email notifications -->
+    <form action="https://formsubmit.co/philip.aziz10@gmail.com" method="POST" id="hiddenReservationForm" style="display:none;" target="formSubmitTarget">
+      <input type="hidden" name="_subject" value="Nouvelle réservation Extra Time" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="email" id="hfCustomerEmail" />
+      <input type="hidden" name="Client" id="hfClient" />
+      <input type="hidden" name="Email" id="hfEmail" />
+      <input type="hidden" name="Jeu" id="hfGame" />
+      <input type="hidden" name="Date" id="hfDate" />
+      <input type="hidden" name="Heure" id="hfTime" />
+      <input type="hidden" name="Durée" id="hfDuration" />
+      <input type="hidden" name="Prix" id="hfPrice" />
+    </form>
+    <iframe name="formSubmitTarget" id="formSubmitTarget" style="display:none;"></iframe>
+  </body>
+</html>
