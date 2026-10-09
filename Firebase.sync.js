@@ -94,10 +94,9 @@ console.log("🔥 Firebase Game-Zone connecté !");
 // BRIDGE localStorage <-> Firebase
 // ===============================
 const KEYS = [
-  "doc_patients_v2", "doc_appointments_v2", "doc_consultations_v2",
-  "doc_prescriptions_v2", "doc_documents_v2", "doc_clinical_notes_v2",
-  "doc_invoices_v2", "doc_notifications_v2", "doc_audit_logs_v2",
-  "doc_settings_v3"
+  "et_games", "et_store_items_v3", "et_store_categories_v2",
+  "et_store_orders", "et_customers", "et_reservations",
+  "et_notifications", "et_maze_config", "et_maze_records", "et_rewards_v2"
 ];
 
 let lastJson = "";
