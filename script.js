@@ -1,3 +1,76 @@
+// ==========================================
+// إدارة بيانات الألعاب والمزامنة مع Firebase (Game-Zone)
+// ==========================================
+
+// دالة إضافة عنصر جديد وحفظه في Firebase
+async function addItem(itemData) {
+    let currentData = await window.FirebaseGameZone.loadGameZoneData();
+    if (!currentData || !Array.isArray(currentData.items)) {
+        currentData = { items: [] };
+    }
+     
+    // زيد العنصر الجديد للقائمة
+    currentData.items.push(itemData);
+
+    // احفظ الداتا الكل في Firebase
+    const success = await window.FirebaseGameZone.saveGameZoneData(currentData);
+    
+    // تعديل رسالة النجاح حسب رغبتك (بدون كلمة مريض)
+    if (success) {
+        console.log("✅ اتسجل العنصر بنجاح وتعت الـ data للكلاد!");
+    }
+}
+
+// دالة تحميل البيانات عند البدء وتحديث الواجهة
+async function loadDataOnStart() {
+    if (!window.FirebaseGameZone) {
+        console.error("❌ ملف Firebase.sync.js لم يتم تحميله بشكل صحيح!");
+        return;
+    }
+
+    console.log("جاري تحميل البيانات من Firebase...");
+    const data = await window.FirebaseGameZone.loadGameZoneData();
+    
+    if (data) {
+        console.log("📥 تم جلب البيانات بنجاح:", data);
+        updateUI(data);
+    } else {
+        console.log("📥 الداتا فارغة حالياً.");
+    }
+}
+
+// المزامنة الفورية (Real-time): لو جهاز آخر بدل حاجة، يتحدث وحده
+function enableRealtimeSync() {
+    if (!window.FirebaseGameZone) return;
+
+    window.FirebaseGameZone.listenGameZoneData((newData) => {
+        console.log("🔄 وصل تحديث جديد من جهاز آخر!");
+        if (newData) {
+            updateUI(newData);
+        }
+    });
+}
+
+// حفظ بيانات عامة من الجهاز
+async function saveDataFromDevice(appData) {
+    if (!window.FirebaseGameZone) return;
+
+    const success = await window.FirebaseGameZone.saveGameZoneData(appData);
+    if (success) {
+        console.log("✅ تم حفظ البيانات وإرسالها لبقية الأجهزة بنجاح");
+    }
+}
+
+// دالة تحديث الواجهة (عوضها بالدالة اللي تعرض البيانات في الجدول أو الـ HTML متاعك)
+function updateUI(data) {
+    console.log("تحديث الواجهة بالبيانات:", data);
+}
+
+// تشغيل الوظائف أول ما تحضر الصفحة (بدون أي تكرار)
+document.addEventListener("DOMContentLoaded", () => {
+    loadDataOnStart();
+    enableRealtimeSync();
+});
 (function(){const y=document.createElement("link").relList;if(y&&y.supports&&y.supports("modulepreload"))return;for(const M of document.querySelectorAll('link[rel="modulepreload"]'))S(M);new MutationObserver(M=>{for(const U of M)if(U.type==="childList")for(const oe of U.addedNodes)oe.tagName==="LINK"&&oe.rel==="modulepreload"&&S(oe)}).observe(document,{childList:!0,subtree:!0});function g(M){const U={};return M.integrity&&(U.integrity=M.integrity),M.referrerPolicy&&(U.referrerPolicy=M.referrerPolicy),M.crossOrigin==="use-credentials"?U.credentials="include":M.crossOrigin==="anonymous"?U.credentials="omit":U.credentials="same-origin",U}function S(M){if(M.ep)return;M.ep=!0;const U=g(M);fetch(M.href,U)}})();var T0={exports:{}},xm={},C0={exports:{}},Gu={exports:{}};Gu.exports;var Wy;function GD(){return Wy||(Wy=1,(function(p,y){/**
  * @license React
  * react.development.js
