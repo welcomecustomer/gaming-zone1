@@ -4,10 +4,6 @@
 
 // دالة إضافة عنصر جديد وحفظه في Firebase
 // Importe la fonction de synchronisation depuis ton fichier Firebase.sync.js
-import { startSync } from './Firebase.sync.js'; // ثبت في المسار متاع الملف هل هو في نفس البلاصة ولا لا
-
-// أطلق الدالة مباشرة أول ما يخدم السكريبت
-startSync();
 async function addItem(itemData) {
     let currentData = await window.FirebaseGameZone.loadGameZoneData();
     if (!currentData || !Array.isArray(currentData.items)) {
