@@ -1,6 +1,7 @@
 // ===============================
-// IMPORT FIREBASE MODULES
+// Firebase.sync.js (Game-Zone Sync)
 // ===============================
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import {
   getDatabase,
@@ -11,14 +12,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
 // ===============================
-// FIREBASE CONFIGURATION (الصحيحة متاعك)
+// FIREBASE CONFIGURATION
 // ===============================
 const firebaseConfig = {
   apiKey: "AIzaSyBxCzmQkxUtjWyJYgPWlnTLXQmqDJH97tQ",
   authDomain: "game-zone1-5a7a3.firebaseapp.com",
   databaseURL: "https://game-zone1-5a7a3-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "game-zone1-5a7a3",
-  storageBucket: "game-zone1-5a7a3.firebasestorage.app",
+  storageBucket: "game-zone1-5a7a3.appspot.com",
   messagingSenderId: "364408778800",
   appId: "1:364408778800:web:6878c12bed8b76c0213df5",
   measurementId: "G-WPWBLKEJD0"
@@ -31,17 +32,17 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // ===============================
-// DATABASE PATH
+// DATABASE PATH (المسار الجديد في Firebase)
 // ===============================
-const DATABASE_PATH = "cabinetData";
+const DATABASE_PATH = "gameZoneData";
 
 // ===============================
 // SAVE ALL DATA
 // ===============================
-async function saveCabinetData(data) {
+async function saveGameZoneData(data) {
   try {
     await set(ref(db, DATABASE_PATH), data);
-    console.log("✅ Données sauvegardées dans Firebase");
+    console.log("✅ Données sauvegardées dans Firebase (Game-Zone)");
     return true;
   } catch (error) {
     console.error("❌ Erreur Firebase:", error);
@@ -52,7 +53,7 @@ async function saveCabinetData(data) {
 // ===============================
 // LOAD ALL DATA
 // ===============================
-async function loadCabinetData() {
+async function loadGameZoneData() {
   try {
     const snapshot = await get(ref(db, DATABASE_PATH));
     if (snapshot.exists()) {
@@ -70,7 +71,7 @@ async function loadCabinetData() {
 // ===============================
 // LISTEN FOR CHANGES
 // ===============================
-function listenCabinetData(callback) {
+function listenGameZoneData(callback) {
   return onValue(ref(db, DATABASE_PATH), (snapshot) => {
     if (snapshot.exists()) {
       callback(snapshot.val());
@@ -81,13 +82,13 @@ function listenCabinetData(callback) {
 // ===============================
 // MAKE AVAILABLE TO THE APP
 // ===============================
-window.FirebaseCabinet = {
-  saveCabinetData,
-  loadCabinetData,
-  listenCabinetData
+window.FirebaseGameZone = {
+  saveGameZoneData,
+  loadGameZoneData,
+  listenGameZoneData
 };
 
-console.log("🔥 Firebase Cabinet connecté !");
+console.log("🔥 Firebase Game-Zone connecté !");
 
 // ===============================
 // BRIDGE localStorage <-> Firebase
@@ -115,13 +116,13 @@ function writeLocal(json) {
 }
 
 export async function startSync() {
-  const remote = await loadCabinetData();
+  const remote = await loadGameZoneData();
   if (remote && remote.json) {
     lastJson = remote.json;
     writeLocal(remote.json);
   } else {
     lastJson = readLocal();
-    await saveCabinetData({ json: lastJson, updatedAt: Date.now() });
+    await saveGameZoneData({ json: lastJson, updatedAt: Date.now() });
   }
 
   const originalSetItem = Storage.prototype.setItem;
@@ -134,12 +135,12 @@ export async function startSync() {
       const json = readLocal();
       if (json === lastJson) return;
       lastJson = json;
-      const ok = await saveCabinetData({ json, updatedAt: Date.now() });
+      const ok = await saveGameZoneData({ json, updatedAt: Date.now() });
       console.log("sync upload:", ok ? "OK" : "ECHEC");
     }, 800);
   };
 
-  listenCabinetData(remote => {
+  listenGameZoneData(remote => {
     if (!remote || !remote.json || remote.json === lastJson) return;
     lastJson = remote.json;
     writeLocal(remote.json);
