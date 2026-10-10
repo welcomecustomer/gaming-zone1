@@ -112,6 +112,12 @@ function writeLocal(json) {
   KEYS.forEach(k => {
     if (o[k] !== null && o[k] !== undefined) localStorage.setItem(k, o[k]);
   });
+  try {
+    const cur = JSON.parse(localStorage.getItem("et_current_user") || "null");
+    const list = JSON.parse(localStorage.getItem("et_customers") || "[]");
+    const fresh = cur && list.find(c => (c.email||"").toLowerCase() === (cur.email||"").toLowerCase());
+    if (fresh) localStorage.setItem("et_current_user", JSON.stringify(fresh));
+  } catch (e) {}
 }
 
 export async function startSync() {
